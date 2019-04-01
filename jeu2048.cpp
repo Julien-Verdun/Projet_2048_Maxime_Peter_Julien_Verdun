@@ -18,7 +18,9 @@ Voir is_mouv qui fait tout planter
 Gerer si il y a eu un mouv ou pas
 
 
+Gerer le retour_en_arriere avec l'affichage de la page 2
 
+Gerer
 
 
 Plus tard :
@@ -158,21 +160,13 @@ void jeu2048::change(){
         tuileChanged();
         scoreChanged();
         meilleurScoreChanged();
-
-
-void jeu2048::change(){                          //Récupère le sens, applique la logique du jeu et actualise l'affichage de l'interface
-
-
-    if (Est_gagne() == 0 && Est_perdu() == 1)
-
-    {
+    }
+    if (Est_gagne()==0 && Est_perdu() == 1)
         Defaite();
-    }
-    if (Est_gagne() == 1)
-    {
+    if (Est_gagne()==1)
         Victoire();
-    }
 }
+
 
 
 void jeu2048::change_score()
@@ -318,7 +312,7 @@ QString jeu2048::readMeilleurScoreValue(){
 
 QString jeu2048::readVictDef(){
     string vd = get_victoire_defaite();
-    return QString("vd");
+    return QString(vd.c_str());
 }
 
 
