@@ -32,6 +32,8 @@ class jeu2048 : public QObject, public Damier<int>
     Q_PROPERTY(QString sQML READ readScoreValue() NOTIFY scoreChanged)
     Q_PROPERTY(QString bsQML READ readMeilleurScoreValue() NOTIFY meilleurScoreChanged)
 
+    //Q_PROPERTY(int pos1 READ read_new_position() NOTIFY positionChanged )
+
 public:
     explicit jeu2048(QObject *parent = nullptr);
 //    Q_INVOKABLE void move_up();
