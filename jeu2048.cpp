@@ -380,6 +380,7 @@ int jeu2048::Is_mouv()
      return 1;
  }
 
+
  vector<int> jeu2048::Decaler(int sens, int num_l_c)
  {
      vector<int> old_one(4);
@@ -395,30 +396,22 @@ int jeu2048::Is_mouv()
 
 
      //Decalage et addition si possible
-     if (sens == 1 || sens == 3) // Décalage à gauche et en haut symétrique
+     if (sens == 1 || sens == 3)
      {
          int i = 0;
          int cmpt = 0;
-         int non_nuls=0;
-         while(i<4 && cmpt ==0)
+         while(i<3 && cmpt < 10)
          {
              if (Is_only_zero(old_one,i,0)==1)
-                 cmpt = 1;
-             if(old_one[i] == 0)
+                 i = 3;
+             else if(old_one[i] == 0)
              {
-                 int c = i-non_nuls;
-                 for(int j = i;j<4;j++)
-                 {
-                     if (old_one[j] ==0) c+=1;
-                     else
-                     {
-                           old_one[j-c] = old_one[j];
-                           old_one[j]=0;
-                     }
-                  }
+                 for(int j = i;j<3;j++)
+                     old_one[j] = old_one[j+1];
+                 old_one[3] = 0;
              }
-             non_nuls+=1;
-             i+=1;//i+=1;
+             else{i+=1;}//i+=1;
+             cmpt += 1;
          }
          for (int i = 0;i<3;i++)
          {
@@ -435,29 +428,19 @@ int jeu2048::Is_mouv()
      {
          int i = 3;
          int cmpt = 0;
-         int non_nuls=0;
-         while(i>-1 && cmpt ==0)
+         while (i>0 && cmpt < 10)
+         {
+             if (Is_only_zero(old_one,i,1)==1)
+                 i = 0;
+             else if(old_one[i] == 0)
              {
-                 if (Is_only_zero(old_one,i,0)==1)
-                     cmpt = 1;
-                 if(old_one[i] == 0)
-                 {
-                     int c = i-non_nuls;
-                     for(int j = i;j>-1;j--)
-                     {
-                         if (old_one[j] ==0) c-=1;
-                         else
-                         {
-                               old_one[3-(j-c)] = old_one[j];
-                               old_one[j]=0;
-                         }
-                      }
-                 }
-                 non_nuls+=1;
-                 i-=1;
+                 for(int j = i;j>0;j--)
+                     old_one[j] = old_one[j-1];
+                 old_one[0] = 0;
              }
-
-
+             else{i-=1;}//i -= 1;
+             cmpt += 1;
+         }
          for (int i = 3;i>0;i--)
          {
              if (old_one[i] != 0 && old_one[i] == old_one[i-1])
@@ -471,6 +454,100 @@ int jeu2048::Is_mouv()
      }
      return old_one;
  }
+
+
+
+// vector<int> jeu2048::Decaler(int sens, int num_l_c)
+// {
+//     vector<int> old_one(4);
+//     //Construction de la liste
+//     if (sens == 1 || sens == 2)
+//     {
+//         for(int j = 0;j<get_C();j++) old_one[j] = Get(num_l_c,j);
+//     }
+//     if (sens == 3 || sens == 4)
+//     {
+//         for(int i = 0;i<get_L();i++) old_one[i] = Get(i,num_l_c);
+//     }
+
+
+//     //Decalage et addition si possible
+//     if (sens == 1 || sens == 3) // Décalage à gauche et en haut symétrique
+//     {
+//         int i = 0;
+//         int cmpt = 0;
+//         int non_nuls=0;
+//         while(i<4 && cmpt ==0)
+//         {
+//             if (Is_only_zero(old_one,i,0)==1)
+//                 cmpt = 1;
+//             if(old_one[i] == 0)
+//             {
+//                 int c = i-non_nuls;
+//                 for(int j = i;j<4;j++)
+//                 {
+//                     if (old_one[j] ==0) c+=1;
+//                     else
+//                     {
+//                           old_one[j-c] = old_one[j];
+//                           old_one[j]=0;
+//                     }
+//                  }
+//             }
+//             non_nuls+=1;
+//             i+=1;//i+=1;
+//         }
+//         for (int i = 0;i<3;i++)
+//         {
+//             if (old_one[i] != 0 && old_one[i] == old_one[i+1])
+//             {
+//                 old_one[i] += old_one[i+1];
+//                 for(int j = i+1;j<3;j++)
+//                     old_one[j] = old_one[j+1];
+//                 old_one[3] = 0;
+//             }
+//         }
+//     }
+//     if (sens == 2 || sens == 4)
+//     {
+//         int i = 3;
+//         int cmpt = 0;
+//         int non_nuls=0;
+//         while(i>-1 && cmpt ==0)
+//             {
+//                 if (Is_only_zero(old_one,i,0)==1)
+//                     cmpt = 1;
+//                 if(old_one[i] == 0)
+//                 {
+//                     int c = i-non_nuls;
+//                     for(int j = i;j>-1;j--)
+//                     {
+//                         if (old_one[j] ==0) c-=1;
+//                         else
+//                         {
+//                               old_one[3-(j-c)] = old_one[j];
+//                               old_one[j]=0;
+//                         }
+//                      }
+//                 }
+//                 non_nuls+=1;
+//                 i-=1;
+//             }
+
+
+//         for (int i = 3;i>0;i--)
+//         {
+//             if (old_one[i] != 0 && old_one[i] == old_one[i-1])
+//             {
+//                 old_one[i] += old_one[i-1];
+//                 for(int j = i-1;j>0;j--)
+//                     old_one[j] = old_one[j-1];
+//                 old_one[0] = 0;
+//             }
+//         }
+//     }
+//     return old_one;
+// }
 
 
  void jeu2048::Deplacer_all(int sens)//deplacer_all(3et4) ne fonctionne pas et deplacer_all(1) s'arrete un cran avant colonne 3
