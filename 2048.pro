@@ -33,3 +33,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     jeu2048.h \
     damier.h
+
+DISTFILES +=

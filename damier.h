@@ -32,8 +32,11 @@ public:
     int get_C();
     int get_L();
 
-    G** get_last_compo();
+    G** get_T();
+
+    G** get_last_compo(int i);// i = 1 derniere compo ; i = 2 avant derniere etc
     void append_new_compo(G** t);
+    void delete_last_compo();
 
 private:
     int L;
