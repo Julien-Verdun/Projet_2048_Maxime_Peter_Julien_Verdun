@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 
 Window {
+    id: window
     visible: true
     width: 400
     height: 600
@@ -24,24 +25,24 @@ Window {
         Keys.onPressed:
             switch (event.key) {
             case Qt.Key_Up:
-                valeurTuile1.recup_sens(3);
-                valeurTuile1.change();//le faire pour 1 active tuileChanged et le fait pour tous
+                jeu.recup_sens(3);
+                jeu.change();//le faire pour 1 active tuileChanged et le fait pour tous
                 break;
             case Qt.Key_Down:
-                valeurTuile1.recup_sens(4);
-                valeurTuile1.change();
+                jeu.recup_sens(4);
+                jeu.change();
                 break;
             case Qt.Key_Left:
-                valeurTuile1.recup_sens(1);
-                valeurTuile1.change();
+                jeu.recup_sens(1);
+                jeu.change();
                 break;
             case Qt.Key_Right:
-                 valeurTuile1.recup_sens(2);
-                valeurTuile1.change();
+                 jeu.recup_sens(2);
+                jeu.change();
                 break;
             case Qt.Key_A:
-                valeurTuile1.recup_sens(5);
-                valeurTuile1.terminer();
+                jeu.recup_sens(5);
+                jeu.terminer();
             }
         Tuile{
             id: case1
@@ -49,14 +50,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: parent.top
             anchors.topMargin: 10
-            texteAEditer: valeurTuile1.valQML1
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile1.change();
-                        //
-//                }
-//            }
+            texteAEditer: jeu.valQML1
         }
 
         Tuile{
@@ -65,14 +59,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: parent.top
             anchors.topMargin: 10
-            texteAEditer: valeurTuile2.valQML2
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile2.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML2
         }
 
         Tuile{
@@ -81,14 +68,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: parent.top
             anchors.topMargin: 10
-            texteAEditer: valeurTuile3.valQML3
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile3.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML3
         }
 
         Tuile{
@@ -97,14 +77,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: parent.top
             anchors.topMargin: 10
-            texteAEditer: valeurTuile4.valQML4
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile4.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML4
         }
 
         Tuile{
@@ -113,14 +86,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case1.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile5.valQML5
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile5.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML5
         }
 
         Tuile{
@@ -129,14 +95,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case2.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile6.valQML6
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile6.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML6
         }
 
         Tuile{
@@ -145,14 +104,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case3.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile7.valQML7
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile7.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML7
         }
 
         Tuile{
@@ -161,14 +113,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case4.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile8.valQML8
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile8.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML8
         }
 
         Tuile{
@@ -177,14 +122,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case5.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile9.valQML9
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile9.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML9
         }
 
         Tuile{
@@ -193,14 +131,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case6.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile10.valQML10
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile10.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML10
         }
 
         Tuile{
@@ -209,14 +140,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case7.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile11.valQML11
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile11.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML11
         }
 
         Tuile{
@@ -225,14 +149,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case8.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile12.valQML12
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile12.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML12
         }
 
 
@@ -242,14 +159,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case9.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile13.valQML13
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile13.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML13
 
         }
 
@@ -259,14 +169,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case10.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile14.valQML14
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile14.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML14
         }
 
         Tuile{
@@ -275,14 +178,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case11.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile15.valQML15
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile15.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML15
         }
 
         Tuile{
@@ -291,14 +187,7 @@ Window {
             anchors.leftMargin: 10
             anchors.top: case12.bottom
             anchors.topMargin: 10
-            texteAEditer: valeurTuile16.valQML16
-//            Keys.onPressed: {
-//                switch (event.key) {
-//                case Qt.Key_up:
-//                    valeurTuile16.change();
-//                    break;
-//                }
-//            }
+            texteAEditer: jeu.valQML16
         }
 
 
@@ -313,7 +202,7 @@ Window {
         Rectangle {
         id: nom_jeu
         width: 100
-        height: 30
+        height: 60
         color: "#ffffff"
         anchors.top: parent.top
         anchors.topMargin: 50
@@ -341,21 +230,46 @@ Window {
         id: current_score
         x: 40
         width: 120
-        height: 30
+        height: 60
         color: "#ffffff"
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.right: parent.right
         anchors.rightMargin: 160
         Text {
-            id: text_current_score
+            id: text_current_score1
+            height: 30
             color: "#221111"
-            text: valeurCurrentScore.sQML
+            text: qsTr("Score")
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
             lineHeight: 1
             elide: Text.ElideMiddle
             horizontalAlignment: Text.AlignHCenter
             font.bold: true
-            anchors.fill: parent
+            font.pixelSize: 15
+            verticalAlignment: Text.AlignVCenter
+            renderType: Text.QtRendering
+        }
+        Text {
+            id: text_current_score
+            height: 30
+            color: "#221111"
+            text: valeurCurrentScore.sQML
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            lineHeight: 1
+            elide: Text.ElideMiddle
+            horizontalAlignment: Text.AlignHCenter
+            font.bold: true
             font.pixelSize: 15
             verticalAlignment: Text.AlignVCenter
             renderType: Text.QtRendering
@@ -369,24 +283,77 @@ Window {
         id: best_score
         x: 35
         width: 120
-        height: 30
+        height: 60
         color: "#ffffff"
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.rightMargin: 50
         anchors.right: parent.right
         Text {
-            id: text_best_score
+            id: text_best_score1
+            height: 30
             color: "#221111"
-            text: valeurMeilleurScore.bsQML
+            text: qsTr("Meilleur score")
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.top: parent.top
             horizontalAlignment: Text.AlignHCenter
             lineHeight: 1
             font.bold: true
-            anchors.fill: parent
+            elide: Text.ElideMiddle
+            verticalAlignment: Text.AlignVCenter
+            font.pixelSize: 15
+            renderType: Text.QtRendering
+        }
+        Text {
+            id: text_best_score
+            height: 30
+            color: "#221111"
+            text: valeurMeilleurScore.bsQML
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            horizontalAlignment: Text.AlignHCenter
+            lineHeight: 1
+            font.bold: true
             elide: Text.ElideMiddle
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 15
             renderType: Text.QtRendering
         }
     }
+
+    Rectangle {
+        id: retour_arriere
+        width: 30
+        height: 30
+        color: "#ffffff"
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 15
+        anchors.right: parent.horizontalCenter
+        anchors.rightMargin: 0
+
+        Image {
+            id: image_retour_arriere
+            anchors.fill: parent
+            source: "image_retour_arriere.PNG"
+        }
+
+        MouseArea {
+            id: mouseArea_retour_arriere
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: jeu.retour_en_arriere()
+        }
+    }
 }
+
+
+
+/*##^## Designer {
+    D{i:21;anchors_width:80}D{i:22;anchors_width:40}D{i:24;anchors_width:80}D{i:25;anchors_width:40}
+D{i:27;anchors_height:100;anchors_width:100}
+}
+ ##^##*/

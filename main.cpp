@@ -13,22 +13,22 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    engine.rootContext()->setContextProperty("valeurTuile1",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile2",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile3",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile4",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile5",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile6",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile7",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile8",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile9",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile10",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile11",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile12",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile13",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile14",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile15",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurTuile16",&ajeu2048);
+    engine.rootContext()->setContextProperty("jeu",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile2",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile3",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile4",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile5",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile6",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile7",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile8",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile9",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile10",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile11",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile12",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile13",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile14",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile15",&ajeu2048);
+//    engine.rootContext()->setContextProperty("valeurTuile16",&ajeu2048);
 
     engine.rootContext()->setContextProperty("valeurCurrentScore",&ajeu2048);
     engine.rootContext()->setContextProperty("valeurMeilleurScore",&ajeu2048);

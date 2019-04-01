@@ -8,7 +8,7 @@ Item {
 
     Rectangle {
         id: rectangle
-        color: "#bbaa11"
+        color: "#ffffaa"
         radius: 6
         border.color: "#bbaa66"
         border.width: 2
@@ -23,26 +23,20 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent
             font.pixelSize: 22
-            //text:valeurTuile.vleQML
-
-//            focus true
-//            text: valeurTuile.vleQML
-//            Keys.onPressed: {
-//                switch (event.key){
-//                case Qt.Key_Up:
-//                    valeurTuile.move_up();
-//                    break;
-//                case Qt.Key_Down:
-//                    valeurTuile.move_down();
-//                    break;
-//                case Qt.Key_Left:
-//                    valeurTuile.move_left()
-//                    break;
-//                case Qt.Key_Right:
-//                    valeurTuile.move_right();
-//                    break;
-//                }
-//            }
+            onTextChanged: {
+                if (text === " ") {rectangle.color = "#ffffee" ; return;}
+                if (text === "2") {rectangle.color = "#ffffaa" ; return;}
+                if (text === "4") {rectangle.color = "#ffff66" ; return;}
+                if (text === "8") {rectangle.color = "#ffff00" ; return;}
+                if (text === "16") {rectangle.color = "#ffee00" ; return;}
+                if (text === "32") {rectangle.color = "#ffcc00" ; return;}
+                if (text === "64") {rectangle.color = "#ffaa00" ; return;}
+                if (text === "128") {rectangle.color = "#ff8800" ; return;}
+                if (text === "256") {rectangle.color = "#ff6600" ; return;}
+                if (text === "512") {rectangle.color = "#ff4400" ; return;}
+                if (text === "1024") {rectangle.color = "#ff2200" ; return;}
+                if (text === "2048") {rectangle.color = "#ff0000" ; return;}
+            }
         }
     }
 
@@ -50,8 +44,7 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        //acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-        onEntered: rectangle.color = "#aaaaaa", texte.font.pixelSize = 30
-        onExited: rectangle.color = "#bbaa11", texte.font.pixelSize = 22
+        onEntered: rectangle.border.width=4, texte.font.pixelSize = 30
+        onExited: rectangle.border.width=2, texte.font.pixelSize = 22
     }
 }

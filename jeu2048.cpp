@@ -8,26 +8,24 @@ using namespace std;
 /*
 A FAIRE
 
-Separer score et score change en 2 rectangles pour avoir du texte au dessus du score
 
-Gerer la defaite et la vicoire
-Faire une meilleur fonction est_perdu
 
-Gerer la fermeture de la fenetre sur demande avec touche a
-
-Verifier la logique de jeu
+Julien :
 
 S'occuper de la gestion des parties, ajouter une case retour en arrière
 
-Gérer les couleurs en fonction du score dans les tuiles en passant la couleur de la tuile comme un argument
-et en modifiant cette valeur en fonction de la valeur de la case
-2048 jaunee
-64 rouge
-16 rouge orange
-2 blanc
+Voir is_mouv qui fait tout planter
+Gerer si il y a eu un mouv ou pas
 
+
+
+
+
+Plus tard :
 
 Gerer les transitions
+Ajout de profil joueur pour gestion du score
+
 
 */
 
@@ -39,20 +37,25 @@ jeu2048::jeu2048(QObject *parent) : QObject(parent), Damier<int>(4,4,2048,0)
 
 void jeu2048::Init2048(){
     Set(rand()%4,rand()%4,2);
+
+    //mise à jour du score
     set_score(0);
-    set_meilleur_score(0);
+    set_meilleur_score(20480);
+
+    //ajout en memoire de la grille
+    append_new_compo(get_T());
+
+    //mise à jour de l'interface graphique
     tuileChanged();
     scoreChanged();
     meilleurScoreChanged();
-    //chnger la valeur de la case
-    // comment acceder au contenue texte de la case ?
 }
 
 
 
 
 
-int jeu2048::recup_sens(int S)//1gauche 2 bas 3 droit 4 haut
+int jeu2048::recup_sens(int S)
 {
     sens = S;
 }
@@ -85,6 +88,16 @@ void jeu2048::set_meilleur_score(int new_score)
 }
 
 
+string jeu2048::get_victoire_defaite()
+{
+    return txt_vict_def;
+}
+
+
+void jeu2048::set_victoire_defaite(string vd)
+{
+    txt_vict_def = vd;
+}
 
 
 int jeu2048::comput_score()
@@ -92,8 +105,27 @@ int jeu2048::comput_score()
     int score = 0;
     for (int i = 0;i<get_L();i++)
         for (int j = 0;j < get_C();j++)
-            if (Get(i,j) > 2)
-                score += Get(i,j);
+            score += number2score(Get(i,j));
+    return score;
+}
+
+
+
+int jeu2048::number2score(int n)
+{
+    int score = 0;
+    float i = 0.5;
+    if (n==4)
+        score = 4;
+    else
+    {
+        while (n >= 4)
+        {
+            n /= 2;
+            i*=2;
+            score += floor(i)*n*2;
+        }
+    }
     return score;
 }
 
@@ -104,55 +136,37 @@ int jeu2048::comput_score()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void jeu2048::change(){
-    if (Est_gagne() == 0)// && Est_perdu() == 0)
+    if (Est_gagne() == 0 && Est_perdu() == 0)
     {
         Deplacer_all(get_sens());
+        //
         Renouvellement();
+
+        // mise à jour du score
+        set_score(comput_score());
+        if (get_meilleur_score() < get_score())
+            set_meilleur_score(get_score());
+
+
+        //ajout en mémoire de la partie
+        append_new_compo(get_T());
+
+
+        //mise à jour de l'interface graphique
+        tuileChanged();
+        scoreChanged();
+        meilleurScoreChanged();
+
     }
-//    else if (Est_gagne() == 0 && Est_perdu() == 1)
-//    {
-//        Defaite();
-//    }
-    else
+    if (Est_gagne() == 0 && Est_perdu() == 1)
+    {
+        Defaite();
+    }
+    if (Est_gagne() == 1)
     {
         Victoire();
     }
-    set_score(comput_score());
-    if (get_meilleur_score() < get_score())
-        set_meilleur_score(get_score());
-    tuileChanged();
-    scoreChanged();
-    meilleurScoreChanged();
 }
 
 
@@ -297,6 +311,10 @@ QString jeu2048::readMeilleurScoreValue(){
 
 
 
+QString jeu2048::readVictDef(){
+    string vd = get_victoire_defaite();
+    return QString("vd");
+}
 
 
 
@@ -307,12 +325,16 @@ QString jeu2048::readMeilleurScoreValue(){
 
 
 
+int jeu2048::Is_mouv()
+{
+    int ** last_T = get_last_compo(2);
+    for (int i = 0 ; i < get_L() ; i ++)
+        for (int j = 0 ; j < get_C() ; j ++)
+            if (last_T[i][j] != Get(i,j))
+                return 1;
+    return 0;
 
-
-
-
-
-
+}
 
 
 
@@ -475,18 +497,26 @@ QString jeu2048::readMeilleurScoreValue(){
  }
 
 
+
  void jeu2048::Renouvellement()
  {
-     int x = rand()%get_L();
-     int y = rand()%get_C();
-     while (Estoccupee(x,y)==1)
-     {
-         x = rand()%get_L();
-         y = rand()%get_C();
-     }
-     Set(x,y,2);
+    vector<int> liste_place_dispo;
+    for(int i = 0 ; i<get_L() ; i++)
+        for(int j = 0 ; j<get_C() ; j++)
+            if (Get(i,j) == 0)
+            {
+                liste_place_dispo.push_back(i);
+                liste_place_dispo.push_back(j);
+            }
+    if (!(liste_place_dispo.size() == 0))
+    {
+        int i = rand()%liste_place_dispo.size();
+        if (i%2 == 0)
+            Set(liste_place_dispo[i],liste_place_dispo[i+1],2);
+        else
+            Set(liste_place_dispo[i-1],liste_place_dispo[i],2);
+    }
  }
-
 
  int jeu2048::Est_gagne()
  {
@@ -502,11 +532,31 @@ QString jeu2048::readMeilleurScoreValue(){
  // a revoir car plus omplexe que ca
  //besoin d'étudier si un mouvement peut-être fait ou non
  {
-     int sortie = 0;
+     int sortie = 1;//on considere que l'on a perdu sauf si..
+     //verification a l'interieur
+     //si case vide on a pas perdu
      for (int i = 0;i<get_L();i++)
          for (int j = 0;j < get_C();j++)
              if (Get(i,j) == 0)
-                sortie = 1;
+                sortie = 0;
+     //verification à l'interieur
+     //si 2 cases a proximite ont meme valeur on a pas perdu
+     for (int i = 1;i<get_L()-1;i++)
+         for (int j = 1;j < get_C()-1;j++)
+             if (Get(i,j)==Get(i+1,j) || Get(i,j)==Get(i-1,j) || Get(i,j)==Get(i,j-1) || Get(i,j)==Get(i,j+1))
+                sortie = 0;
+     //verification sur les bords-colonnes
+     //si 2 cases ont meme valeur, pas perdu
+     if (Get(1,0) == Get(2,0) || Get(1,3) == Get(2,3))
+         sortie = 0;
+     //verification sur les bords-lignes
+     //si 2 cases ont meme valeur, pas perdu
+     if (Get(0,1) == Get(0,2) || Get(3,1) == Get(3,2))
+         sortie = 0;
+     //verification sur les 4 bords
+     //si 2 cases ont meme valeur, pas perdu
+     if (Get(0,0)==Get(0,1) || Get(0,0)==Get(1,0) || Get(3,0) == Get(3,1) || Get(3,0) == Get(2,0) || Get(0,3) == Get(1,3) || Get(0,3) == Get(0,2) || Get(3,3)==Get(2,3) || Get(3,3) == Get(3,2))
+         sortie = 0;
      return sortie;
  }
 
@@ -514,30 +564,32 @@ QString jeu2048::readMeilleurScoreValue(){
 
  void jeu2048::Victoire()
  {
-     cout << "Victoire !!" << endl;
-     terminer();
+     set_victoire_defaite("Bravo, c'est gagné !!!");
+     victoire_defaiteChanged();
+     //decaler vers la fenetre 2
  }
 
  void jeu2048::Defaite()
  {
-     cout << "Defaite !!" << endl;
-     terminer();
+     set_victoire_defaite("Dommage, tu as perdu !!!");
+     victoire_defaiteChanged();
+     //decaler vers la fenetre 2
  }
-
-
-void jeu2048::terminer()
-{
-
-}
 
 
 
 void jeu2048::retour_en_arriere()
 {
-    int** last_compo = get_last_compo();
+    //if (Is_mouv()==1)
+    //{
+    int** last_compo = get_last_compo(1);
     for (int i = 0;i<get_L();i++)
         for (int j = 0;j < get_C();j++)
             Set(i,j,last_compo[i][j]);
+    tuileChanged();
+    scoreChanged();
+    delete_last_compo();
+    //}
 }
 
 

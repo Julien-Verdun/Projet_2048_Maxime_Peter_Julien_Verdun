@@ -37,6 +37,14 @@ int Damier<G>::get_L(){
     return L;
 }
 
+
+template<class G>
+G** Damier<G>::get_T()
+{
+    return T;
+}
+
+
 //void Damier::Init_Jeu()
 
 template<class G>
@@ -110,9 +118,9 @@ void Damier<G>::Set(int x, int y, G value) {
 
 
 template<class G>
-G** Damier<G>::get_last_compo()
+G** Damier<G>::get_last_compo(int i)
 {
-    return Liste_T[Liste_T.size()];
+    return Liste_T[Liste_T.size()-i];
 }
 
 
@@ -123,6 +131,13 @@ void Damier<G>::append_new_compo(G** t)
     Liste_T.push_back(t);
 }
 
+
+
+template<class G>
+void Damier<G>::delete_last_compo()
+{
+    Liste_T.pop_back();
+}
 
 
 
@@ -237,7 +252,6 @@ template class Damier<float>;
 template class Damier<int>;
 template class Damier<char>;
 template class Damier<bool>;
-//template class Damier<int**>;
 
 
 //Instantiating friend function operator<<
