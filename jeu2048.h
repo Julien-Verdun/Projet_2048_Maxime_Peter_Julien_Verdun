@@ -32,14 +32,14 @@ class jeu2048 : public QObject, public Damier<int>
     Q_PROPERTY(QString sQML READ readScoreValue() NOTIFY scoreChanged)
     Q_PROPERTY(QString bsQML READ readMeilleurScoreValue() NOTIFY meilleurScoreChanged)
 
-    //Q_PROPERTY(int pos1 READ read_new_position() NOTIFY positionChanged )
+
+    Q_PROPERTY(QString valVD_QML READ readVictDef() NOTIFY victoire_defaiteChanged)
+
+
+   // Q_PROPERTY(QString txtimgQML READ retour_en_arriere() NOTIFY )
 
 public:
     explicit jeu2048(QObject *parent = nullptr);
-//    Q_INVOKABLE void move_up();
-//    Q_INVOKABLE void move_down();
-//    Q_INVOKABLE void move_left();
-//    Q_INVOKABLE void move_right();
 
     Q_INVOKABLE int recup_sens(int sens);
     QString readTuileValue1();
@@ -60,29 +60,24 @@ public:
     QString readTuileValue16();
     QString readScoreValue();
     QString readMeilleurScoreValue();
+    QString readVictDef();
 
     Q_INVOKABLE void change();
     Q_INVOKABLE void change_score();
     Q_INVOKABLE void change_meilleur_score();
 
-    Q_INVOKABLE void terminer();
 
     void Deplacer_all(int sens);
     void Renouvellement();
     int Estoccupee(int i, int j);
-    // void Save_places(); // matrice contenant l'ensemble des positions des parties précédentes
-    // void Retour_en_arriere(); // permet le retour en arrière de 1 à N fois
     void Defaite();//lorsque toutes les cases sont pleines et que plus aucun mouvement n'est possible
-    // void Is_mouv(); detecte si il y a eu un mouvement d'un coup à l'autre, sinon pas de renouvellement
+    int Is_mouv();// 1 si mouvement d'un coup à l'autre,0 sinon pas de renouvellement
     int Is_only_zero(vector<int> liste, int indice, int g_d);// g_d == 0 si sens normal et 1 si de droite à gauche
     int Est_vide(int l_c,int num);//0 pour ligne 1 pour colonne; 1 si est_vide 0 sinon
     int Est_gagne();//1 si gagne 0 sinon
     int Est_perdu();//1si perdu 0 sinon
     void Victoire();// lorsqu'une case vaut 2048.
     vector<int> Decaler(int sens,int num_l_c);
-    //fonction qui change les valeurs de chaque case en les valeurs de la matrice damier
-
-
     int get_sens();
 
     int get_score();
@@ -93,7 +88,14 @@ public:
 
     int comput_score();
 
-    void retour_en_arriere();
+    string get_victoire_defaite();
+    void set_victoire_defaite(string vd);
+
+
+    Q_INVOKABLE void retour_en_arriere();
+
+    int number2score(int n); //convertit un nombre en le score conrespondant
+    // par exemple une case avec un 8 correspond à un score de 16
 
 
 protected :
@@ -102,7 +104,9 @@ private:
     int sens;
     int score;
     int meilleur_score;
+    string txt_vict_def;
 signals:
+    void victoire_defaiteChanged();
     void tuileChanged();
     void scoreChanged();
     void meilleurScoreChanged();
