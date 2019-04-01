@@ -32,10 +32,12 @@ class jeu2048 : public QObject, public Damier<int>
     Q_PROPERTY(QString sQML READ readScoreValue() NOTIFY scoreChanged)
     Q_PROPERTY(QString bsQML READ readMeilleurScoreValue() NOTIFY meilleurScoreChanged)
 
+
     Q_PROPERTY(QString valVD_QML READ readVictDef() NOTIFY victoire_defaiteChanged)
 
 
    // Q_PROPERTY(QString txtimgQML READ retour_en_arriere() NOTIFY )
+
 public:
     explicit jeu2048(QObject *parent = nullptr);
 

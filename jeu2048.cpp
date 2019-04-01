@@ -55,7 +55,8 @@ void jeu2048::Init2048(){
 
 
 
-int jeu2048::recup_sens(int S)
+
+int jeu2048::recup_sens(int S)//1 gauche 4 bas 2 droite 3 haut
 {
     sens = S;
 }
@@ -100,7 +101,7 @@ void jeu2048::set_victoire_defaite(string vd)
 }
 
 
-int jeu2048::comput_score()
+int jeu2048::comput_score() // Calcule le score en fonction des données du damier
 {
     int score = 0;
     for (int i = 0;i<get_L();i++)
@@ -158,8 +159,12 @@ void jeu2048::change(){
         scoreChanged();
         meilleurScoreChanged();
 
-    }
+
+void jeu2048::change(){                          //Récupère le sens, applique la logique du jeu et actualise l'affichage de l'interface
+
+
     if (Est_gagne() == 0 && Est_perdu() == 1)
+
     {
         Defaite();
     }
@@ -345,7 +350,7 @@ int jeu2048::Is_mouv()
 
 
 
- int jeu2048::Est_vide(int l_c,int num)
+ int jeu2048::Est_vide(int l_c,int num) // Teste si une ligne ou une colonne du damier est vide
  {
      if (l_c == 0)
      {
@@ -368,7 +373,7 @@ int jeu2048::Is_mouv()
 
 
 
- int jeu2048::Is_only_zero(vector<int> liste,int indice, int g_d)
+ int jeu2048::Is_only_zero(vector<int> liste,int indice, int g_d)  // Teste si les éléments d'une liste à droite ou à gauche d'un élément donné sont nul ou non
  {
      if (g_d == 0)
          for (int i = indice;i<sizeof(liste);i++)
@@ -396,22 +401,30 @@ int jeu2048::Is_mouv()
 
 
      //Decalage et addition si possible
-     if (sens == 1 || sens == 3)
+     if (sens == 1 || sens == 3) // Décalage à gauche et en haut symétrique
      {
          int i = 0;
          int cmpt = 0;
-         while(i<3 && cmpt < 10)
+         int non_nuls=0;
+         while(i<4 && cmpt ==0)
          {
              if (Is_only_zero(old_one,i,0)==1)
-                 i = 3;
-             else if(old_one[i] == 0)
+                 cmpt = 1;
+             if(old_one[i] == 0)
              {
-                 for(int j = i;j<3;j++)
-                     old_one[j] = old_one[j+1];
-                 old_one[3] = 0;
+                 int c = i-non_nuls;
+                 for(int j = i;j<4;j++)
+                 {
+                     if (old_one[j] ==0) c+=1;
+                     else
+                     {
+                           old_one[j-c] = old_one[j];
+                           old_one[j]=0;
+                     }
+                  }
              }
-             else{i+=1;}//i+=1;
-             cmpt += 1;
+             non_nuls+=1;
+             i+=1;//i+=1;
          }
          for (int i = 0;i<3;i++)
          {
@@ -428,19 +441,29 @@ int jeu2048::Is_mouv()
      {
          int i = 3;
          int cmpt = 0;
-         while (i>0 && cmpt < 10)
-         {
-             if (Is_only_zero(old_one,i,1)==1)
-                 i = 0;
-             else if(old_one[i] == 0)
+         int non_nuls=0;
+         while(i>-1 && cmpt ==0)
              {
-                 for(int j = i;j>0;j--)
-                     old_one[j] = old_one[j-1];
-                 old_one[0] = 0;
+                 if (Is_only_zero(old_one,i,0)==1)
+                     cmpt = 1;
+                 if(old_one[i] == 0)
+                 {
+                     int c = i-non_nuls;
+                     for(int j = i;j>-1;j--)
+                     {
+                         if (old_one[j] ==0) c-=1;
+                         else
+                         {
+                               old_one[3-(j-c)] = old_one[j];
+                               old_one[j]=0;
+                         }
+                      }
+                 }
+                 non_nuls+=1;
+                 i-=1;
              }
-             else{i-=1;}//i -= 1;
-             cmpt += 1;
-         }
+
+
          for (int i = 3;i>0;i--)
          {
              if (old_one[i] != 0 && old_one[i] == old_one[i-1])
@@ -529,7 +552,7 @@ int jeu2048::Is_mouv()
 
 
  int jeu2048::Est_perdu()
- // a revoir car plus omplexe que ca
+ // a revoir car plus complexe que ca
  //besoin d'étudier si un mouvement peut-être fait ou non
  {
      int sortie = 1;//on considere que l'on a perdu sauf si..
