@@ -2,7 +2,7 @@
 #include "damier.h"
 #include <iostream>
 using namespace std;
-#include <Windows.h>
+//#include <Windows.h>
 
 
 /*
@@ -140,20 +140,21 @@ int jeu2048::number2score(int n)
 
 
 void jeu2048::change(){
+
+    //ajout en mémoire de la partie
+    append_new_compo(get_T());
+
     if (Est_gagne() == 0 && Est_perdu() == 0)
     {
+        //deplacement des cases
         Deplacer_all(get_sens());
-        //
+        //ajout d'un 2 aléatoirement si possible
         Renouvellement();
 
         // mise à jour du score
         set_score(comput_score());
         if (get_meilleur_score() < get_score())
             set_meilleur_score(get_score());
-
-
-        //ajout en mémoire de la partie
-        append_new_compo(get_T());
 
 
         //mise à jour de l'interface graphique
@@ -326,7 +327,7 @@ QString jeu2048::readVictDef(){
 
 int jeu2048::Is_mouv()
 {
-    int ** last_T = get_last_compo(2);
+    int ** last_T = get_last_compo();
     for (int i = 0 ; i < get_L() ; i ++)
         for (int j = 0 ; j < get_C() ; j ++)
             if (last_T[i][j] != Get(i,j))
@@ -370,7 +371,7 @@ int jeu2048::Is_mouv()
  int jeu2048::Is_only_zero(vector<int> liste,int indice, int g_d)  // Teste si les éléments d'une liste à droite ou à gauche d'un élément donné sont nul ou non
  {
      if (g_d == 0)
-         for (int i = indice;i<sizeof(liste);i++)
+         for (int i = indice ; i< sizeof(liste) ; i++)
              if (liste[i] != 0)
                  return 0;
      if (g_d == 1)
@@ -676,16 +677,26 @@ void jeu2048::retour_en_arriere()
 {
     //if (Is_mouv()==1)
     //{
-    int** last_compo = get_last_compo(1);
+    int** last_compo = get_last_compo();
     for (int i = 0;i<get_L();i++)
+    {
         for (int j = 0;j < get_C();j++)
+        {
             Set(i,j,last_compo[i][j]);
-    tuileChanged();
-    scoreChanged();
-    delete_last_compo();
+            cout << last_compo[i][j] << "  ";
+        }
+        cout << endl;
+    }
+    maj();
     //}
 }
 
+
+void jeu2048::maj()
+{//pourquoi ça ne fonctionne pas ? Je ne comprends pas, c'est pourtant transparent
+    tuileChanged();
+    scoreChanged();
+}
 
 
 

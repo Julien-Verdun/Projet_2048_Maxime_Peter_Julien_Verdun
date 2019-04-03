@@ -7,6 +7,7 @@ Damier<G>::Damier(int l, int c, int borne, G vd)
 {
     Borne = borne;
     Alloc(l, c);
+    Alloc1(l,c);
     Init(vd);
 }
 
@@ -64,6 +65,16 @@ void Damier<G>::Alloc(int l, int c){
 }
 
 template<class G>
+void Damier<G>::Alloc1(int l, int c){
+    L = l;
+    C = c;
+    T1 = new G*[L];
+    for(int i=0; i<L; i++)
+        T1[i] = new G[C];
+}
+
+
+template<class G>
 void Damier<G>::Print(){
     cout << endl;
     for(int i=0; i<L; i++) {
@@ -85,8 +96,13 @@ void Damier<G>::Init(G value){
 
 
     for(int i=0; i<L; i++)
+    {
         for(int j=0; j<C; j++)
+        {
             T[i][j]=value;
+            T1[i][j] = value;
+        }
+    }
 }
 
 
@@ -118,9 +134,20 @@ void Damier<G>::Set(int x, int y, G value) {
 
 
 template<class G>
-G** Damier<G>::get_last_compo(int i)
+G Damier<G>::Get_T1(int x, int y) {
+    return T1[x][y];
+}
+template<class G>
+void Damier<G>::Set_T1(int x, int y, G value) {
+    T1[x][y]=value;
+}
+
+
+template<class G>
+G** Damier<G>::get_last_compo()
 {
-    return Liste_T[Liste_T.size()-i];
+    //return Liste_T[Liste_T.size()-i];//Liste_T.back();
+    return T1;
 }
 
 
@@ -128,7 +155,10 @@ G** Damier<G>::get_last_compo(int i)
 template<class G>
 void Damier<G>::append_new_compo(G** t)
 {
-    Liste_T.push_back(t);
+    //Liste_T.push_back(t);
+    for (int i = 0;i<get_L();i++)
+        for (int j = 0;j < get_C();j++)
+            Set_T1(i,j,t[i][j]);
 }
 
 
@@ -136,7 +166,7 @@ void Damier<G>::append_new_compo(G** t)
 template<class G>
 void Damier<G>::delete_last_compo()
 {
-    Liste_T.pop_back();
+    //Liste_T.pop_back();
 }
 
 

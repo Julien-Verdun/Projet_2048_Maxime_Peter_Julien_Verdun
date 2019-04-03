@@ -259,7 +259,8 @@ Window {
             id: text_current_score
             height: 30
             color: "#221111"
-            text: valeurCurrentScore.sQML
+            //text: valeurCurrentScore.sQML
+            text: jeu.sQML
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -310,7 +311,8 @@ Window {
             id: text_best_score
             height: 30
             color: "#221111"
-            text: valeurMeilleurScore.bsQML
+            //text: valeurMeilleurScore.bsQML
+            text: jeu.bsQML
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -345,7 +347,9 @@ Window {
             id: mouseArea_retour_arriere
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: jeu.retour_en_arriere()
+            onClicked: {
+                jeu.retour_en_arriere() ;
+            }
         }
     }
 }

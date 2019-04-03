@@ -16,8 +16,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("jeu",&ajeu2048);
 
 
-    engine.rootContext()->setContextProperty("valeurCurrentScore",&ajeu2048);
-    engine.rootContext()->setContextProperty("valeurMeilleurScore",&ajeu2048);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

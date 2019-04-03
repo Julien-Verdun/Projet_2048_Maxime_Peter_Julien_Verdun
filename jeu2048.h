@@ -36,8 +36,6 @@ class jeu2048 : public QObject, public Damier<int>
     Q_PROPERTY(QString valVD_QML READ readVictDef() NOTIFY victoire_defaiteChanged)
 
 
-   // Q_PROPERTY(QString txtimgQML READ retour_en_arriere() NOTIFY )
-
 public:
     explicit jeu2048(QObject *parent = nullptr);
 
@@ -58,6 +56,7 @@ public:
     QString readTuileValue14();
     QString readTuileValue15();
     QString readTuileValue16();
+
     QString readScoreValue();
     QString readMeilleurScoreValue();
     QString readVictDef();
@@ -91,8 +90,8 @@ public:
     string get_victoire_defaite();
     void set_victoire_defaite(string vd);
 
-
     Q_INVOKABLE void retour_en_arriere();
+    void maj();
 
     int number2score(int n); //convertit un nombre en le score conrespondant
     // par exemple une case avec un 8 correspond à un score de 16
