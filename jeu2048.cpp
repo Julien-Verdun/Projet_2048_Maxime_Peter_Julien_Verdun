@@ -9,24 +9,19 @@ using namespace std;
 A FAIRE
 
 
-
-Julien :
-
-S'occuper de la gestion des parties, ajouter une case retour en arrière
-
-Voir is_mouv qui fait tout planter
-Gerer si il y a eu un mouv ou pas
+Problème avec le retour en arrière
+Il n'y a de desynchronisation entre dernier element liste des parties et partie
+donc pas is_mouv est nulle et pas de retor en arriere possible
 
 
-Gerer le retour_en_arriere avec l'affichage de la page 2
-
-Gerer
+Gerer la victoire et la défaite avec fenetre pop-up
+ou passage sur nouvelle fenetre QML
 
 
 Plus tard :
 
 Gerer les transitions
-Ajout de profil joueur pour gestion du score
+Ajout de profil joueur pour gestion du score et enregistrement score sur fichier txt
 
 
 */
@@ -43,9 +38,6 @@ void jeu2048::Init2048(){
     //mise à jour du score
     set_score(0);
     set_meilleur_score(20480);
-
-    //ajout en memoire de la grille
-    append_new_compo(get_T());
 
     //mise à jour de l'interface graphique
     tuileChanged();
@@ -141,9 +133,11 @@ int jeu2048::number2score(int n)
 
 void jeu2048::change(){
 
-    //ajout en mémoire de la partie
-    append_new_compo(get_T());
-
+    if (Is_mouv() == 1)
+    {
+        //ajout en mémoire de la partie
+        append_new_compo(get_T());
+    }
     if (Est_gagne() == 0 && Est_perdu() == 0)
     {
         //deplacement des cases
@@ -328,6 +322,24 @@ QString jeu2048::readVictDef(){
 int jeu2048::Is_mouv()
 {
     int ** last_T = get_last_compo();
+    for (int i = 0 ; i < get_L() ; i ++)
+    {
+        for (int j = 0 ; j < get_C() ; j ++)
+        {
+            cout << last_T[i][j] << "   ";
+        }
+        cout << endl;
+    }
+
+    for (int i = 0 ; i < get_L() ; i ++)
+    {
+        for (int j = 0 ; j < get_C() ; j ++)
+        {
+            cout << Get(i,j) << "   ";
+        }
+        cout << endl;
+    }
+
     for (int i = 0 ; i < get_L() ; i ++)
         for (int j = 0 ; j < get_C() ; j ++)
             if (last_T[i][j] != Get(i,j))
@@ -675,27 +687,30 @@ int jeu2048::Is_mouv()
 
 void jeu2048::retour_en_arriere()
 {
-    //if (Is_mouv()==1)
-    //{
+    if (Is_mouv()==1)
+    {
     int** last_compo = get_last_compo();
     for (int i = 0;i<get_L();i++)
-    {
         for (int j = 0;j < get_C();j++)
-        {
             Set(i,j,last_compo[i][j]);
-            cout << last_compo[i][j] << "  ";
-        }
-        cout << endl;
-    }
-    maj();
-    //}
-}
+     cout << "retour_en_arriere" << endl;
 
+    //on doit modifier une valeur sinon on ne pourra plus jouer car l'algo considere
+    // qu'il n'y  pas eu de mouvement
+//    for (int i = 0;i<get_L();i++)
+//        for (int j = 0;j < get_C();j++)
+//            Set_T1(i,j,0);
+    delete_last_compo();
 
-void jeu2048::maj()
-{//pourquoi ça ne fonctionne pas ? Je ne comprends pas, c'est pourtant transparent
+    // mise à jour du score
+    set_score(comput_score());
+    if (get_meilleur_score() < get_score())
+        set_meilleur_score(get_score());
+
+    //mise à jour de l'interface graphique
     tuileChanged();
     scoreChanged();
+    }
 }
 
 

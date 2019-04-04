@@ -46,7 +46,6 @@ G** Damier<G>::get_T()
 }
 
 
-//void Damier::Init_Jeu()
 
 template<class G>
 void Damier<G>::Free(){
@@ -68,9 +67,11 @@ template<class G>
 void Damier<G>::Alloc1(int l, int c){
     L = l;
     C = c;
+    G** T1;
     T1 = new G*[L];
     for(int i=0; i<L; i++)
         T1[i] = new G[C];
+    Liste_T.push_back(T1);
 }
 
 
@@ -94,13 +95,12 @@ void Damier<G>::Init(G value){
 //        throw(e);
 //    }
 
-
     for(int i=0; i<L; i++)
     {
         for(int j=0; j<C; j++)
         {
             T[i][j]=value;
-            T1[i][j] = value;
+            Liste_T[0][i][j] = value;
         }
     }
 }
@@ -133,21 +133,21 @@ void Damier<G>::Set(int x, int y, G value) {
 
 
 
-template<class G>
-G Damier<G>::Get_T1(int x, int y) {
-    return T1[x][y];
-}
-template<class G>
-void Damier<G>::Set_T1(int x, int y, G value) {
-    T1[x][y]=value;
-}
+//template<class G>
+//G Damier<G>::Get_T1(int x, int y) {
+//    return T1[x][y];
+//}
+//template<class G>
+//void Damier<G>::Set_T1(int x, int y, G value) {
+//    T1[x][y]=value;
+//}
 
 
 template<class G>
 G** Damier<G>::get_last_compo()
 {
-    //return Liste_T[Liste_T.size()-i];//Liste_T.back();
-    return T1;
+    return Liste_T.back();//Liste_T[Liste_T.size()-i];
+    //return T1;
 }
 
 
@@ -155,10 +155,7 @@ G** Damier<G>::get_last_compo()
 template<class G>
 void Damier<G>::append_new_compo(G** t)
 {
-    //Liste_T.push_back(t);
-    for (int i = 0;i<get_L();i++)
-        for (int j = 0;j < get_C();j++)
-            Set_T1(i,j,t[i][j]);
+    Liste_T.push_back(t);
 }
 
 
@@ -166,7 +163,7 @@ void Damier<G>::append_new_compo(G** t)
 template<class G>
 void Damier<G>::delete_last_compo()
 {
-    //Liste_T.pop_back();
+    Liste_T.pop_back();
 }
 
 
@@ -185,6 +182,7 @@ template<class G>
 void Damier<G>::ReDim(int l, int c, G vd) {
     Free();
     Alloc(l, c);
+    Alloc1(l,c);
     Init(vd);
 }
 
@@ -193,6 +191,7 @@ Damier<G>& Damier<G>::operator= (const Damier<G> &D){
     if ( this != &D ) { // protection autoréférence
         Free();
         Alloc(D.L, D.C);
+        Alloc1(D.L,D.C);
         for(int i=0; i<L; i++)
             for(int j=0; j<C; j++)
                 T[i][j] = D.T[i][j];

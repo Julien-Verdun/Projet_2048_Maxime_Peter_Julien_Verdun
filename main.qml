@@ -40,9 +40,9 @@ Window {
                  jeu.recup_sens(2);
                 jeu.change();
                 break;
-            case Qt.Key_A:
-                jeu.recup_sens(5);
-                jeu.terminer();
+            case Qt.Key_R:
+                jeu.retour_en_arriere();
+                break;
             }
         Tuile{
             id: case1

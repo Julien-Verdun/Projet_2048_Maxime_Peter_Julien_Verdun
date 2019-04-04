@@ -91,7 +91,6 @@ public:
     void set_victoire_defaite(string vd);
 
     Q_INVOKABLE void retour_en_arriere();
-    void maj();
 
     int number2score(int n); //convertit un nombre en le score conrespondant
     // par exemple une case avec un 8 correspond à un score de 16

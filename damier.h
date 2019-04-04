@@ -29,8 +29,8 @@ public:
     G Get(int x, int y);
     void Set(int x, int y, G value);
 
-    G Get_T1(int x, int y);
-    void Set_T1(int x, int y, G value);
+    //G Get_T1(int x, int y);
+    //void Set_T1(int x, int y, G value);
 
     void ReDim(int l, int c, G vd = 0);
 
@@ -48,8 +48,8 @@ private:
     int C;
     int Borne;
     G** T;
-    //vector<G**> Liste_T;
-    G** T1;
+    vector<G**> Liste_T;
+    //G** T1;
     // Méthode privée (factorisation  de code)
     void Alloc(int l, int c);
     void Alloc1(int l, int c);
