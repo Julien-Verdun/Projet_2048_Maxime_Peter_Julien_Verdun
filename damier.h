@@ -15,11 +15,11 @@ public:
     Damier(const Damier &D);
     ~Damier();
 
-    Damier<G>& operator=  (const Damier<G> &D); // opérateur d'affectation
-    Damier<G>& operator+= (const Damier<G> &D);
-    Damier<G>& operator+= (G c);
-    Damier<G>  operator+  (const Damier<G> &D);
-    template <class B> friend ostream& operator<< (ostream& sortie, Damier<B>& V);
+//    Damier<G>& operator=  (const Damier<G> &D); // opérateur d'affectation
+//    Damier<G>& operator+= (const Damier<G> &D);
+//    Damier<G>& operator+= (G c);
+//    Damier<G>  operator+  (const Damier<G> &D);
+//    template <class B> friend ostream& operator<< (ostream& sortie, Damier<B>& V);
 
 
 
@@ -29,9 +29,6 @@ public:
     G Get(int x, int y);
     void Set(int x, int y, G value);
 
-    //G Get_T1(int x, int y);
-    //void Set_T1(int x, int y, G value);
-
     void ReDim(int l, int c, G vd = 0);
 
     int get_C();
@@ -39,22 +36,26 @@ public:
 
     G** get_T();
 
-    G** get_last_compo();// i = 1 derniere compo ; i = 2 avant derniere etc
+    G** get_last_compo();
     void append_new_compo(G** t);
     void delete_last_compo();
 
+    int get_pos_vec();
+    void set_pos_vec(int i);
+
+
 private:
+    int pos_vec;
     int L;
     int C;
     int Borne;
     G** T;
     vector<G**> Liste_T;
-    //G** T1;
     // Méthode privée (factorisation  de code)
     void Alloc(int l, int c);
     void Alloc1(int l, int c);
     void Free();
-    bool sameDimensions (const Damier<G> &D);
+    //bool sameDimensions (const Damier<G> &D);
 };
 
 #endif // DAMIER_H

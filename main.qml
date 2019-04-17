@@ -205,7 +205,7 @@ Window {
         height: 60
         color: "#ffffff"
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 25
         anchors.left: parent.left
         anchors.leftMargin: 30
 
@@ -233,7 +233,7 @@ Window {
         height: 60
         color: "#ffffff"
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 25
         anchors.right: parent.right
         anchors.rightMargin: 160
         Text {
@@ -287,7 +287,7 @@ Window {
         height: 60
         color: "#ffffff"
         anchors.top: parent.top
-        anchors.topMargin: 50
+        anchors.topMargin: 25
         anchors.rightMargin: 50
         anchors.right: parent.right
         Text {
@@ -352,7 +352,64 @@ Window {
             }
         }
     }
+
+    Rectangle {
+        id: rect_nom_joueur
+        width: 200
+        height: 25
+        color: "#ffffff"
+        radius: 6
+        anchors.top: parent.top
+        anchors.topMargin: 90
+        anchors.horizontalCenter: parent.horizontalCenter
+        border.width: 2
+        border.color: "#000000"
+        TextInput {
+            id: nom_joueur
+            text: qsTr("Nom")
+            anchors.fill: parent
+            selectionColor: "#008080"
+            renderType: Text.NativeRendering
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 17
+        }
+
+    }
+
+    Rectangle {
+        id: rectangle
+        y: 98
+        width: 25
+        height: 25
+        color: "#11ff11"
+        radius: 6
+        border.width: 2
+        border.color: "#000000"
+        anchors.verticalCenter: rect_nom_joueur.verticalCenter
+        anchors.left: rect_nom_joueur.right
+        anchors.leftMargin: 5
+
+        Text {
+            id: validation_name
+            color: "#ffffff"
+            text: qsTr("OK")
+            renderType: Text.QtRendering
+            font.bold: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
+            font.pixelSize: 17
+        }
+        MouseArea {
+            id: mouseArea_name
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: jeu.set_nom_joueur(toString(nom_joueur.text))
+        }
+    }
 }
+
+
 
 
 

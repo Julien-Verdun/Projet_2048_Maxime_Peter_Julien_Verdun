@@ -36,5 +36,6 @@ HEADERS += \
     damier.h \
     gestion_scores.h
 
-DISTFILES += \
-    gestion_des_scores
+DISTFILES +=
+
+FORMS +=
