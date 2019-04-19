@@ -15,13 +15,6 @@ public:
     Damier(const Damier &D);
     ~Damier();
 
-//    Damier<G>& operator=  (const Damier<G> &D); // opérateur d'affectation
-//    Damier<G>& operator+= (const Damier<G> &D);
-//    Damier<G>& operator+= (G c);
-//    Damier<G>  operator+  (const Damier<G> &D);
-//    template <class B> friend ostream& operator<< (ostream& sortie, Damier<B>& V);
-
-
 
     void Print();
     void Init(G value);
@@ -51,11 +44,11 @@ private:
     int Borne;
     G** T;
     vector<G**> Liste_T;
-    // Méthode privée (factorisation  de code)
+
     void Alloc(int l, int c);
     void Alloc1(int l, int c);
     void Free();
-    //bool sameDimensions (const Damier<G> &D);
+
 };
 
 #endif // DAMIER_H

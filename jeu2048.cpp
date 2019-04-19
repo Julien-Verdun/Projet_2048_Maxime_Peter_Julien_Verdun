@@ -1,6 +1,5 @@
 #include "jeu2048.h"
 #include "damier.h"
-#include "gestion_scores.h"
 #include <iostream>
 using namespace std;
 //#include <Windows.h>
@@ -37,7 +36,7 @@ Gerer les actions de la barre input et voir comment valider quand on ecrit dedan
 */
 
 
-jeu2048::jeu2048(QObject *parent) : QObject(parent), Damier<int>(4,4,2048,0), gestion_scores("C:\\Users\\Julienv\\Documents\\ECL\\Cours\\S8\\PrograC++\\2048\\2048\\Projet_2048_Maxime_Peter_Julien_Verdun\\gestion_scores.txt")
+jeu2048::jeu2048(QObject *parent) : QObject(parent), Damier<int>(4,4,2048,0)//, gestion_scores("C:\\Users\\Julienv\\Documents\\ECL\\Cours\\S8\\PrograC++\\2048\\2048\\Projet_2048_Maxime_Peter_Julien_Verdun\\gestion_scores.txt")
 /*
 Constructeur de la classe jeu2048, hérite des classes QObject,
 Damier<int> et gestion_scores.
@@ -66,9 +65,9 @@ initialise et met à jour le score, le meilleur score et le nom du joueur.
     //mise à jour du score
     set_score(0);
     set_meilleur_score(20480);
-    set_nom_joueur("Nom");
+    //set_nom_joueur("Nom");
 
-    ecriture_fichier(get_nom_joueur(),get_score());
+    //ecriture_fichier(get_nom_joueur(),get_score());
     //mise à jour de l'interface graphique
 
     tuileChanged();
@@ -134,22 +133,22 @@ Modifie la variable meilleur_score et la remplace par le nouveau score new_score
 }
 
 
-string jeu2048::get_nom_joueur()
-/*
-Renvoie le nom du joueur actuelle.
-*/
-{
-    return nom_joueur;
-}
+//string jeu2048::get_nom_joueur()
+///*
+//Renvoie le nom du joueur actuelle.
+//*/
+//{
+//    return nom_joueur;
+//}
 
-void jeu2048::set_nom_joueur(string name)
-/*
-Modifie le nom du joueur actuel par la chaine de caractère name passée en argument.
-*/
-{
-    nom_joueur = name;
-    cout << "new name " << nom_joueur << endl;
-}
+//void jeu2048::set_nom_joueur(string name)
+///*
+//Modifie le nom du joueur actuel par la chaine de caractère name passée en argument.
+//*/
+//{
+//    nom_joueur = name;
+//    cout << "new name " << nom_joueur << endl;
+//}
 
 
 
@@ -427,7 +426,7 @@ si tel est le cas.
     {
         //ajout en mémoire de la partie
         //int** last_T = get_T();
-        append_new_compo(get_T());
+        //append_new_compo(get_T());
         //comment la liste est elle ajouté au vecteur si ce nest pas ici ???
         cout << "avant modification" << endl;
 
@@ -481,25 +480,21 @@ si tel est le cas.
             }
         }
 
-
         cout <<  " Pos_vec " << get_pos_vec() << endl;
 
         // mise à jour du score
         set_score(comput_score());
         if (get_meilleur_score() < get_score())
             set_meilleur_score(get_score());
-        modification_score(get_nom_joueur(),get_score());
+        //modification_score(get_nom_joueur(),get_score());
 
         //mise à jour de l'interface graphique
         tuileChanged();
         scoreChanged();
         meilleurScoreChanged();
-
     }
-    if (Est_gagne()==0 && Est_perdu() == 1)
-        Defaite();
-    if (Est_gagne()==1)
-        Victoire();
+    if (Est_gagne()==0 && Est_perdu() == 1) Defaite();
+    if (Est_gagne()==1) Victoire();
 }
 
 
@@ -801,18 +796,10 @@ des cases pour revenir à l'étape précédente.
      if (Is_mouv()==1)
      {
      int** last_compo = get_last_compo();
-     //cout << "Retour en arriere" << endl;
-     //cout << get_pos_vec() << endl;
 
      for (int i = 0;i<get_L();i++)
-     {
-         //cout << endl;
          for (int j = 0;j < get_C();j++)
-         {
-             //cout << last_compo[i][j] << " ";
              Set(i,j,last_compo[i][j]);
-         }
-     }
      if (get_pos_vec() > 0) delete_last_compo();
      // mise à jour du score
      set_score(comput_score());
@@ -821,6 +808,14 @@ des cases pour revenir à l'étape précédente.
      //mise à jour de l'interface graphique
      tuileChanged();
      scoreChanged();
+
+     //si c'etait une victoire ou une défaite on remet la chaîne de
+     //caractère à "" pour ne plus afficher le message de fin.
+     if(get_victoire_defaite().size() > 0)
+     {
+        set_victoire_defaite("");
+        victoire_defaiteChanged();
+     }
      }
  }
 
@@ -897,10 +892,3 @@ Cette fonction gère les cas de défaite.
      victoire_defaiteChanged();
      //decaler vers la fenetre 2
  }
-
-
-
-
-
-
-

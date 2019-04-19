@@ -2,7 +2,6 @@
 #define JEU2048_H
 
 #include <QObject>
-#include <gestion_scores.h>
 using namespace std;
 #include "damier.h"
 #include <cmath>
@@ -10,7 +9,7 @@ using namespace std;
 #include <vector>
 #include <iostream>
 
-class jeu2048 : public QObject, public Damier<int>, public gestion_scores
+class jeu2048 : public QObject, public Damier<int>//, public gestion_scores
 {
     Q_OBJECT
     Q_PROPERTY(QString valQML1 READ readTuileValue1() NOTIFY tuileChanged)
@@ -49,8 +48,8 @@ public:
     int get_meilleur_score();
     void set_meilleur_score(int new_score);
 
-    string get_nom_joueur();
-    Q_INVOKABLE void set_nom_joueur(string name);
+    //string get_nom_joueur();
+    //Q_INVOKABLE void set_nom_joueur(string name);
 
     string get_victoire_defaite();
     void set_victoire_defaite(string vd);
@@ -116,7 +115,7 @@ private:
     int sens;
     int score;
     int meilleur_score;
-    string txt_vict_def;
+    string txt_vict_def = "";
     string nom_joueur;
 signals:
     void victoire_defaiteChanged();

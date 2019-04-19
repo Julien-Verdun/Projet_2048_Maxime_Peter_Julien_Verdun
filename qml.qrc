@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Tuile.qml</file>
-        <file>Victoire_Defaite.qml</file>
         <file>image_retour_arriere.PNG</file>
     </qresource>
 </RCC>

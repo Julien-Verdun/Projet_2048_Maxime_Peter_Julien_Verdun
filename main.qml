@@ -259,7 +259,6 @@ Window {
             id: text_current_score
             height: 30
             color: "#221111"
-            //text: valeurCurrentScore.sQML
             text: jeu.sQML
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -311,7 +310,6 @@ Window {
             id: text_best_score
             height: 30
             color: "#221111"
-            //text: valeurMeilleurScore.bsQML
             text: jeu.bsQML
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -353,59 +351,76 @@ Window {
         }
     }
 
-    Rectangle {
-        id: rect_nom_joueur
+//    Rectangle {
+//        id: rect_nom_joueur
+//        width: 200
+//        height: 25
+//        color: "#ffffff"
+//        radius: 6
+//        anchors.top: parent.top
+//        anchors.topMargin: 90
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        border.width: 2
+//        border.color: "#000000"
+//        TextInput {
+//            id: nom_joueur
+//            text: qsTr("Nom")
+//            anchors.fill: parent
+//            selectionColor: "#008080"
+//            renderType: Text.NativeRendering
+//            horizontalAlignment: Text.AlignHCenter
+//            font.pixelSize: 17
+//        }
+
+//    }
+
+//    Rectangle {
+//        id: rectangle
+//        y: 98
+//        width: 25
+//        height: 25
+//        color: "#11ff11"
+//        radius: 6
+//        border.width: 2
+//        border.color: "#000000"
+//        anchors.verticalCenter: rect_nom_joueur.verticalCenter
+//        anchors.left: rect_nom_joueur.right
+//        anchors.leftMargin: 5
+
+//        Text {
+//            id: validation_name
+//            color: "#ffffff"
+//            text: qsTr("OK")
+//            renderType: Text.QtRendering
+//            font.bold: true
+//            verticalAlignment: Text.AlignVCenter
+//            horizontalAlignment: Text.AlignHCenter
+//            anchors.fill: parent
+//            font.pixelSize: 17
+//        }
+//        MouseArea {
+//            id: mouseArea_name
+//            anchors.fill: parent
+//            hoverEnabled: true
+//            onClicked: jeu.set_nom_joueur(toString(nom_joueur.text))
+//        }
+//    }
+
+    Text {
+        id: element
         width: 200
-        height: 25
-        color: "#ffffff"
-        radius: 6
-        anchors.top: parent.top
-        anchors.topMargin: 90
+        height: 60
+        text: jeu.valVD_QML
+        renderType: Text.NativeRendering
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        leftPadding: -3
+        font.family: "Tahoma"
+        lineHeight: 1.2
+        font.bold: true
         anchors.horizontalCenter: parent.horizontalCenter
-        border.width: 2
-        border.color: "#000000"
-        TextInput {
-            id: nom_joueur
-            text: qsTr("Nom")
-            anchors.fill: parent
-            selectionColor: "#008080"
-            renderType: Text.NativeRendering
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 17
-        }
-
-    }
-
-    Rectangle {
-        id: rectangle
-        y: 98
-        width: 25
-        height: 25
-        color: "#11ff11"
-        radius: 6
-        border.width: 2
-        border.color: "#000000"
-        anchors.verticalCenter: rect_nom_joueur.verticalCenter
-        anchors.left: rect_nom_joueur.right
-        anchors.leftMargin: 5
-
-        Text {
-            id: validation_name
-            color: "#ffffff"
-            text: qsTr("OK")
-            renderType: Text.QtRendering
-            font.bold: true
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.fill: parent
-            font.pixelSize: 17
-        }
-        MouseArea {
-            id: mouseArea_name
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: jeu.set_nom_joueur(toString(nom_joueur.text))
-        }
+        anchors.verticalCenter: parent.verticalCenter
+        font.pixelSize: 36
     }
 }
 
