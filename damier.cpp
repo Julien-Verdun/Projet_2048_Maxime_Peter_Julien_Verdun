@@ -178,11 +178,26 @@ Renvoie le dernier damier contenu dans la liste des damiers Liste_T.
 template<class G>
 void Damier<G>::append_new_compo(G** t)
 /*
-Ajoute un damier t à la liste des damiers Liste_T.
+Ajoute un damier t à la liste des damiers Liste_T si
+le damier précédent n'est pas le même.
 */
 {
-    Liste_T.push_back(t);
-    pos_vec++;
+    int is_same = 1;
+    for (int i = 0 ; i< L; i++)
+    {
+        for(int j = 0; j<C ; j++)
+        {
+            if (Liste_T[pos_vec][i][j] != t[i][j])
+            {
+                is_same = 0;
+            }
+        }
+    }
+    if (is_same == 0)
+    {
+        pos_vec++;
+        Liste_T.push_back(t);
+    }
 }
 
 
@@ -214,7 +229,7 @@ Renvoie la variable pos_vec.
 template<class G>
 void Damier<G>::set_pos_vec(int i)
 /*
-Modifie la variable pos_vec par la variable donnée en paramètre i.
+Modifier la variable pos_vec par la variable donnée en paramètre i.
 */
 {
     pos_vec = i;

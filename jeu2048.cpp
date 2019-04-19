@@ -34,12 +34,6 @@ Gerer les actions de la barre input et voir comment valider quand on ecrit dedan
 
 
 
-Plus tard :
-
-Gerer les transitions
-Ajout de profil joueur pour gestion du score et enregistrement score sur fichier txt
-
-
 */
 
 
@@ -432,31 +426,63 @@ si tel est le cas.
     if (Est_gagne() == 0 && Est_perdu() == 0 && Is_mouv() == 1)
     {
         //ajout en mémoire de la partie
-        cout << "Ajout en mémoire de la derniere matrice damier" << endl;
-        int** last_T = get_T();
-        for(int i=0; i<4; i++) {
-            cout << endl;
-            for(int j=0; j<4; j++)
-                cout << last_T[i][j] << " ";
-        }
-        //append_new_compo(last_T);
+        //int** last_T = get_T();
+        append_new_compo(get_T());
         //comment la liste est elle ajouté au vecteur si ce nest pas ici ???
+        cout << "avant modification" << endl;
+
+        for (int i = 0 ; i < get_L() ; i ++)
+        {
+            cout << endl;
+            for (int j = 0 ; j < get_C() ; j ++)
+            {
+                cout << Get(i,j) << " ";
+            }
+        }
+
+        int ** last_T = get_last_compo();
+
+        for (int i = 0 ; i < get_L() ; i ++)
+        {
+            cout << endl;
+            for (int j = 0 ; j < get_C() ; j ++)
+            {
+                cout << last_T[i][j] << " ";
+            }
+        }
 
 
         //deplacement des cases
         Deplacer_all(get_sens());
+
         //ajout d'un 2 aléatoirement si possible
         Renouvellement();
+        //append_new_compo(get_T());
+
+        cout << "apres modification" << endl;
+
+        for (int i = 0 ; i < get_L() ; i ++)
+        {
+            cout << endl;
+            for (int j = 0 ; j < get_C() ; j ++)
+            {
+                cout << Get(i,j) << " ";
+            }
+        }
+
+        int ** last_T1 = get_last_compo();
+
+        for (int i = 0 ; i < get_L() ; i ++)
+        {
+            cout << endl;
+            for (int j = 0 ; j < get_C() ; j ++)
+            {
+                cout << last_T1[i][j] << " ";
+            }
+        }
+
 
         cout <<  " Pos_vec " << get_pos_vec() << endl;
-
-        cout << "Nouveau damier" << endl;
-        int** A = get_T();
-        for(int i=0; i<4; i++) {
-            cout << endl;
-            for(int j=0; j<4; j++)
-                cout << A[i][j] << " ";
-        }
 
         // mise à jour du score
         set_score(comput_score());
@@ -468,7 +494,7 @@ si tel est le cas.
         tuileChanged();
         scoreChanged();
         meilleurScoreChanged();
-        cout << " Joue " << endl;
+
     }
     if (Est_gagne()==0 && Est_perdu() == 1)
         Defaite();
@@ -618,24 +644,6 @@ sinon.
 */
 {
     int ** last_T = get_last_compo();
-    cout << "Is_mouv" << endl;
-    for (int i = 0 ; i < get_L() ; i ++)
-    {
-        for (int j = 0 ; j < get_C() ; j ++)
-        {
-            cout << last_T[i][j] << "   ";
-        }
-        cout << endl;
-    }
-
-    for (int i = 0 ; i < get_L() ; i ++)
-    {
-        for (int j = 0 ; j < get_C() ; j ++)
-        {
-            cout << Get(i,j) << "   ";
-        }
-        cout << endl;
-    }
 
     for (int i = 0 ; i < get_L() ; i ++)
         for (int j = 0 ; j < get_C() ; j ++)
@@ -736,7 +744,7 @@ ligne ou colonne après le déplacement.
                      old_one[j] = old_one[j+1];
                  old_one[3] = 0;
              }
-             else{i+=1;}//i+=1;
+             else{i+=1;}
              cmpt += 1;
          }
          for (int i = 0;i<3;i++)
@@ -793,19 +801,19 @@ des cases pour revenir à l'étape précédente.
      if (Is_mouv()==1)
      {
      int** last_compo = get_last_compo();
-     cout << "Retour en arriere" << endl;
-     cout << get_pos_vec() << endl;
+     //cout << "Retour en arriere" << endl;
+     //cout << get_pos_vec() << endl;
 
      for (int i = 0;i<get_L();i++)
      {
-         cout << endl;
+         //cout << endl;
          for (int j = 0;j < get_C();j++)
          {
-             cout << last_compo[i][j] << " ";
+             //cout << last_compo[i][j] << " ";
              Set(i,j,last_compo[i][j]);
          }
      }
-     delete_last_compo();
+     if (get_pos_vec() > 0) delete_last_compo();
      // mise à jour du score
      set_score(comput_score());
      if (get_meilleur_score() < get_score())
