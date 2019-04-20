@@ -15,8 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     jeu2048.cpp \
-    damier.cpp \
-    gestion_scores.cpp
+    damier.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,8 +32,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     jeu2048.h \
-    damier.h \
-    gestion_scores.h
+    damier.h
 
 DISTFILES +=
 

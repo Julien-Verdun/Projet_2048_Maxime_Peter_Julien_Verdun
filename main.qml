@@ -351,61 +351,6 @@ Window {
         }
     }
 
-//    Rectangle {
-//        id: rect_nom_joueur
-//        width: 200
-//        height: 25
-//        color: "#ffffff"
-//        radius: 6
-//        anchors.top: parent.top
-//        anchors.topMargin: 90
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        border.width: 2
-//        border.color: "#000000"
-//        TextInput {
-//            id: nom_joueur
-//            text: qsTr("Nom")
-//            anchors.fill: parent
-//            selectionColor: "#008080"
-//            renderType: Text.NativeRendering
-//            horizontalAlignment: Text.AlignHCenter
-//            font.pixelSize: 17
-//        }
-
-//    }
-
-//    Rectangle {
-//        id: rectangle
-//        y: 98
-//        width: 25
-//        height: 25
-//        color: "#11ff11"
-//        radius: 6
-//        border.width: 2
-//        border.color: "#000000"
-//        anchors.verticalCenter: rect_nom_joueur.verticalCenter
-//        anchors.left: rect_nom_joueur.right
-//        anchors.leftMargin: 5
-
-//        Text {
-//            id: validation_name
-//            color: "#ffffff"
-//            text: qsTr("OK")
-//            renderType: Text.QtRendering
-//            font.bold: true
-//            verticalAlignment: Text.AlignVCenter
-//            horizontalAlignment: Text.AlignHCenter
-//            anchors.fill: parent
-//            font.pixelSize: 17
-//        }
-//        MouseArea {
-//            id: mouseArea_name
-//            anchors.fill: parent
-//            hoverEnabled: true
-//            onClicked: jeu.set_nom_joueur(toString(nom_joueur.text))
-//        }
-//    }
-
     Text {
         id: element
         width: 200
@@ -422,9 +367,68 @@ Window {
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 36
     }
+
+
+    Rectangle {
+        id: rules_rect
+        color: jeu.colorQML
+        anchors.fill: parent
+        Text {
+            id: text_rules
+            color: "#112222"
+            text: jeu.rulesQML
+            fontSizeMode: Text.Fit
+            font.capitalization: Font.Capitalize
+            anchors.rightMargin: 50
+            anchors.leftMargin: 50
+            anchors.bottomMargin: 50
+            anchors.topMargin: 50
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignLeft
+            lineHeight: 1
+            font.bold: true
+            elide: Text.ElideMiddle
+            verticalAlignment: Text.AlignVCenter
+            font.pixelSize: 15
+            renderType: Text.QtRendering
+        }
+    }
+
+    Rectangle {
+        id: rect_rules_ok
+        y: 98
+        width: 80
+        height: 25
+        color: "#aaaaaa"
+        radius: 3
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 15
+        border.width: 2
+        border.color: "#000000"
+        anchors.left: retour_arriere.right
+        anchors.leftMargin: 40
+
+        Text {
+            id: validation_rules
+            color: "#ffffff"
+            text: qsTr("Règles du jeu")
+            lineHeight: 1.1
+            renderType: Text.QtRendering
+            font.bold: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
+            font.pixelSize: 10
+        }
+        MouseArea {
+            id: mouseArea_rules
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: jeu.set_is_rules()
+        }
+    }
+
 }
-
-
 
 
 

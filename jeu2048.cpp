@@ -1,42 +1,29 @@
 #include "jeu2048.h"
 #include "damier.h"
 #include <iostream>
+#include <fstream>
+#include <ostream>
 using namespace std;
-//#include <Windows.h>
+
 
 
 /*
 A FAIRE
 
-
-Problème avec le retour en arrière
-Il n'y a de desynchronisation entre dernier element liste des parties et partie
-donc pas is_mouv est nulle et pas de retor en arriere possible
-
-
-Gerer la victoire et la défaite avec fenetre pop-up
-ou passage sur nouvelle fenetre QML
-
-
-
-Gestion des scores :
-Finir la classe gestion_scores
-Permettre la lecture de l'ensemble des scores par un boutton par exemple
-Voir pourquoi ça ne fonctionne pas
-
 Permettre l enregistrement du nom d un joueur
 
+Gerer les actions de la barre input et voir comment
+valider quand on ecrit dedans
 
 
-Gerer les actions de la barre input et voir comment valider quand on ecrit dedans : mettre un bouton pour confirmer le nom du joueur, ce sera plus simple (séparé la zone en deux)
-
-
-
+Ajout d'un bouton qui rend visible un rectangle
+contenant les régles et qui permet également de
+l'enlever en appuyant dessus
 
 */
 
 
-jeu2048::jeu2048(QObject *parent) : QObject(parent), Damier<int>(4,4,2048,0)//, gestion_scores("C:\\Users\\Julienv\\Documents\\ECL\\Cours\\S8\\PrograC++\\2048\\2048\\Projet_2048_Maxime_Peter_Julien_Verdun\\gestion_scores.txt")
+jeu2048::jeu2048(QObject *parent) : QObject(parent), Damier<int>(4,4,2048,0)
 /*
 Constructeur de la classe jeu2048, hérite des classes QObject,
 Damier<int> et gestion_scores.
@@ -55,21 +42,18 @@ initialise et met à jour le score, le meilleur score et le nom du joueur.
 */
 {
     Set(rand()%4,rand()%4,2);
-//    vector<int> vecteur_scores = get_vecteur_scores();
-//    vector<string> vecteur_noms = get_vecteur_noms();
-//    cout << " debut de l affichage des listes " << endl;
-//    for (unsigned int i = 0; i < get_vecteur_noms().size(); i++)
-//        cout << vecteur_noms[i] << " " << vecteur_scores[i] << endl;
-//    cout << "fin de l affichage des listes " << endl;
+
 
     //mise à jour du score
     set_score(0);
-    set_meilleur_score(20480);
-    //set_nom_joueur("Nom");
+    init_meilleur_score();
+    set_meilleur_score(meilleur_score);
 
-    //ecriture_fichier(get_nom_joueur(),get_score());
+    rules = 1;
+    set_is_rules();
+
+
     //mise à jour de l'interface graphique
-
     tuileChanged();
     scoreChanged();
     meilleurScoreChanged();
@@ -126,30 +110,22 @@ Renvoie la variable meilleur_score (indique le meilleur score du joueur).
 
 void jeu2048::set_meilleur_score(int new_score)
 /*
-Modifie la variable meilleur_score et la remplace par le nouveau score new_score passé en argument.
+Modifie la variable meilleur_score et la remplace par le nouveau score new_score passé en argument,
+met également à jour le fichier texte contenant le meilleur score.
 */
 {
     meilleur_score = new_score;
+    ofstream file(adresse_meilleur_score,ios::out | ios::trunc);
+    if(file.is_open())
+    {
+        file<<new_score;
+        file.close();
+    }
+    else
+    {
+        cout<<"Error in opening file !! Function rewrite "<<endl;
+    }
 }
-
-
-//string jeu2048::get_nom_joueur()
-///*
-//Renvoie le nom du joueur actuelle.
-//*/
-//{
-//    return nom_joueur;
-//}
-
-//void jeu2048::set_nom_joueur(string name)
-///*
-//Modifie le nom du joueur actuel par la chaine de caractère name passée en argument.
-//*/
-//{
-//    nom_joueur = name;
-//    cout << "new name " << nom_joueur << endl;
-//}
-
 
 
 string jeu2048::get_victoire_defaite()
@@ -412,6 +388,32 @@ QString jeu2048::readVictDef()
 
 
 
+QString jeu2048::readrulesColor()
+{
+    string color = "";
+    if (is_rules() == 1) color = "#FFFFFFFF";
+    else color = "#00FFFFFF";
+    return QString(color.c_str());
+}
+
+
+QString jeu2048::readtextRules()
+{
+    string texte = "";
+    if (is_rules() == 1)
+    {
+        texte = "Les règles du jeu 2048 sont les suivantes : \n ";
+        texte += "- le but du jeu fusionner des cases afin \n d'atteindre le score de 2048 \n";
+        texte += "- seul 2 cases de même valeur peuvent \nêtre fusionnées \n";
+        texte += "- les déplacements se font avec les 4 flèches \n du clavier (haut bas droite et gauche) \n";
+        texte += "- une touche retour en arrière est disponible en \n dessous de la grille afin de rattraper ses mauvais coups \n";
+        texte += "Bon courage !!";
+    }
+    else
+    texte = "";
+    return QString(texte.c_str());
+}
+
 
 
 void jeu2048::change()
@@ -424,69 +426,29 @@ si tel est le cas.
 {
     if (Est_gagne() == 0 && Est_perdu() == 0 && Is_mouv() == 1)
     {
-        //ajout en mémoire de la partie
-        //int** last_T = get_T();
-        //append_new_compo(get_T());
-        //comment la liste est elle ajouté au vecteur si ce nest pas ici ???
-        cout << "avant modification" << endl;
+        //ajout en mémoire de la partie actuelle (qui deviendra la precedente juste apres l'ajout
+        int** A;
+        A = new int*[4];
+        for(int i=0; i<4; i++)
+            A[i] = new int[4];
+        for(int i=0; i<4; i++)
+            for(int j=0; j<4; j++)
+                A[i][j] = Get(i,j);
 
-        for (int i = 0 ; i < get_L() ; i ++)
-        {
-            cout << endl;
-            for (int j = 0 ; j < get_C() ; j ++)
-            {
-                cout << Get(i,j) << " ";
-            }
-        }
-
-        int ** last_T = get_last_compo();
-
-        for (int i = 0 ; i < get_L() ; i ++)
-        {
-            cout << endl;
-            for (int j = 0 ; j < get_C() ; j ++)
-            {
-                cout << last_T[i][j] << " ";
-            }
-        }
-
+        append_new_compo(A);
 
         //deplacement des cases
         Deplacer_all(get_sens());
 
         //ajout d'un 2 aléatoirement si possible
         Renouvellement();
-        //append_new_compo(get_T());
 
-        cout << "apres modification" << endl;
-
-        for (int i = 0 ; i < get_L() ; i ++)
-        {
-            cout << endl;
-            for (int j = 0 ; j < get_C() ; j ++)
-            {
-                cout << Get(i,j) << " ";
-            }
-        }
-
-        int ** last_T1 = get_last_compo();
-
-        for (int i = 0 ; i < get_L() ; i ++)
-        {
-            cout << endl;
-            for (int j = 0 ; j < get_C() ; j ++)
-            {
-                cout << last_T1[i][j] << " ";
-            }
-        }
-
-        cout <<  " Pos_vec " << get_pos_vec() << endl;
 
         // mise à jour du score
         set_score(comput_score());
         if (get_meilleur_score() < get_score())
             set_meilleur_score(get_score());
-        //modification_score(get_nom_joueur(),get_score());
+
 
         //mise à jour de l'interface graphique
         tuileChanged();
@@ -639,7 +601,6 @@ sinon.
 */
 {
     int ** last_T = get_last_compo();
-
     for (int i = 0 ; i < get_L() ; i ++)
         for (int j = 0 ; j < get_C() ; j ++)
             if (last_T[i][j] != Get(i,j))
@@ -767,7 +728,7 @@ ligne ou colonne après le déplacement.
                      old_one[j] = old_one[j-1];
                  old_one[0] = 0;
              }
-             else{i-=1;}//i -= 1;
+             else{i-=1;}
              cmpt += 1;
          }
          for (int i = 3;i>0;i--)
@@ -793,14 +754,14 @@ Lit le damier précédent dans le vecteur des damiers et modifie l'ensemble
 des cases pour revenir à l'étape précédente.
 */
  {
-     if (Is_mouv()==1)
+     if (Is_mouv()==1 && get_pos_vec() >= 1)
      {
      int** last_compo = get_last_compo();
 
      for (int i = 0;i<get_L();i++)
          for (int j = 0;j < get_C();j++)
              Set(i,j,last_compo[i][j]);
-     if (get_pos_vec() > 0) delete_last_compo();
+     delete_last_compo();
      // mise à jour du score
      set_score(comput_score());
      if (get_meilleur_score() < get_score())
@@ -892,3 +853,42 @@ Cette fonction gère les cas de défaite.
      victoire_defaiteChanged();
      //decaler vers la fenetre 2
  }
+
+int jeu2048::is_rules()
+{
+    return rules;
+}
+
+void jeu2048::set_is_rules()
+{
+    if (rules == 0)
+    {
+        rules = 1;
+    }
+    else rules = 0;
+    rulesChanged();
+}
+
+void jeu2048::init_meilleur_score()
+/*
+Lit le fichier texte contenant le meilleur score et initialise la variable meilleur_score
+*/
+{
+    string texte_lu = "";
+    ifstream file(adresse_meilleur_score,ios::in);
+    if(file.is_open())
+    {
+        string line;
+        while (getline(file,line))
+        {
+            texte_lu += line;
+        }
+        file.close();
+        meilleur_score = stoi(texte_lu);
+    }
+    else
+    {
+        cout<<"Error in opening file !! Function lecture_fichier"<<endl;
+        meilleur_score = 0;
+    }
+}

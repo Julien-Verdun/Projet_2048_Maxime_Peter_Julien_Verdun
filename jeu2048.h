@@ -9,7 +9,7 @@ using namespace std;
 #include <vector>
 #include <iostream>
 
-class jeu2048 : public QObject, public Damier<int>//, public gestion_scores
+class jeu2048 : public QObject, public Damier<int>
 {
     Q_OBJECT
     Q_PROPERTY(QString valQML1 READ readTuileValue1() NOTIFY tuileChanged)
@@ -32,9 +32,10 @@ class jeu2048 : public QObject, public Damier<int>//, public gestion_scores
     Q_PROPERTY(QString sQML READ readScoreValue() NOTIFY scoreChanged)
     Q_PROPERTY(QString bsQML READ readMeilleurScoreValue() NOTIFY meilleurScoreChanged)
 
-
     Q_PROPERTY(QString valVD_QML READ readVictDef() NOTIFY victoire_defaiteChanged)
 
+    Q_PROPERTY(QString colorQML READ readrulesColor() NOTIFY rulesChanged)
+    Q_PROPERTY(QString rulesQML READ readtextRules() NOTIFY rulesChanged)
 
 public:
     explicit jeu2048(QObject *parent = nullptr);
@@ -78,6 +79,8 @@ public:
     QString readMeilleurScoreValue();
     QString readVictDef();
 
+    QString readrulesColor();
+    QString readtextRules();
 
     Q_INVOKABLE void change();
     Q_INVOKABLE void change_score();
@@ -105,7 +108,10 @@ public:
     void Defaite();//lorsque toutes les cases sont pleines et que plus aucun mouvement n'est possible
 
 
+    int is_rules(); //renvoie la valeur de la variable rules 1 si les regles sont à afficher et 0 sinon
+    Q_INVOKABLE void set_is_rules();
 
+    void init_meilleur_score();
 
 
 
@@ -115,14 +121,16 @@ private:
     int sens;
     int score;
     int meilleur_score;
+    int rules;
     string txt_vict_def = "";
-    string nom_joueur;
+    string adresse_meilleur_score = "C:\\Users\\Julienv\\Documents\\ECL\\Cours\\S8\\PrograC++\\2048\\2048\\Projet_2048_Maxime_Peter_Julien_Verdun\\meilleur_score.txt";
 signals:
     void victoire_defaiteChanged();
     void tuileChanged();
     void scoreChanged();
     void meilleurScoreChanged();
     void joueur_changed();
+    void rulesChanged();
 public slots:
 };
 
