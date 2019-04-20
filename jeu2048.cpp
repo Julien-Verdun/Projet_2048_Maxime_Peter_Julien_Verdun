@@ -440,6 +440,28 @@ si tel est le cas.
         //deplacement des cases
         Deplacer_all(get_sens());
 
+
+        //Vérification que le dernier mouvement a bougé quelque chose et qu'il n'a pas juste ajouté une cellule
+        //Permet de ne pas freezer le jeu quand la grille est pleine.
+        int** B;
+        B = new int*[4];
+        for(int i=0; i<4; i++)
+            B[i] = new int[4];
+        for(int i=0; i<4; i++)
+            for(int j=0; j<4; j++)
+                B[i][j] = Get(i,j);
+
+        append_new_compo(B);
+
+        if (Is_mouv() == 1)
+        {
+            delete_last_compo();
+            delete_last_compo();
+        }
+        else delete_last_compo();
+
+
+
         //ajout d'un 2 aléatoirement si possible
         Renouvellement();
 
@@ -601,6 +623,30 @@ sinon.
 */
 {
     int ** last_T = get_last_compo();
+
+    cout << "Ancien damier" << endl;
+
+    for (int i = 0 ; i < get_L() ; i ++)
+    {
+        cout << endl;
+        for (int j = 0 ; j < get_C() ; j ++)
+        {
+            cout << last_T[i][j] << " ";
+        }
+    }
+
+    cout << endl;
+    cout << "Nouveau damier" << endl;
+
+    for (int i = 0 ; i < get_L() ; i ++)
+    {
+        cout << endl;
+        for (int j = 0 ; j < get_C() ; j ++)
+        {
+            cout << Get(i,j) << " ";
+        }
+    }
+
     for (int i = 0 ; i < get_L() ; i ++)
         for (int j = 0 ; j < get_C() ; j ++)
             if (last_T[i][j] != Get(i,j))
