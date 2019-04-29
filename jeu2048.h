@@ -49,9 +49,6 @@ public:
     int get_meilleur_score();
     void set_meilleur_score(int new_score);
 
-    //string get_nom_joueur();
-    //Q_INVOKABLE void set_nom_joueur(string name);
-
     string get_victoire_defaite();
     void set_victoire_defaite(string vd);
 
@@ -87,11 +84,10 @@ public:
     Q_INVOKABLE void change_meilleur_score();
 
 
-    int number2score(int n); //convertit un nombre en le score conrespondant
-    // par exemple une case avec un 8 correspond à un score de 16
+    int number2score(int n); //convertit un nombre en le score conrespondant (par exemple une case avec un 8 correspond à un score de 16)
 
-    void Deplacer_all(int sens);
-    void Renouvellement();
+    void Deplacer_all(int sens); // permet le déplacement de toutes les cases dans le sens sens
+    void Renouvellement();// ajoute aléatoirement un 2 sur une case vide
     int Estoccupee(int i, int j);
     int Is_mouv();// 1 si mouvement d'un coup à l'autre,0 sinon pas de renouvellement
     int Is_only_zero(vector<int> liste, unsigned int indice, int g_d);// g_d == 0 si sens normal et 1 si de droite à gauche

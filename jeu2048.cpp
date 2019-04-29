@@ -6,23 +6,6 @@
 using namespace std;
 
 
-
-/*
-A FAIRE
-
-Permettre l enregistrement du nom d un joueur
-
-Gerer les actions de la barre input et voir comment
-valider quand on ecrit dedans
-
-
-Ajout d'un bouton qui rend visible un rectangle
-contenant les régles et qui permet également de
-l'enlever en appuyant dessus
-
-*/
-
-
 jeu2048::jeu2048(QObject *parent) : QObject(parent), Damier<int>(4,4,2048,0)
 /*
 Constructeur de la classe jeu2048, hérite des classes QObject,
@@ -123,7 +106,7 @@ met également à jour le fichier texte contenant le meilleur score.
     }
     else
     {
-        cout<<"Error in opening file !! Function rewrite "<<endl;
+        cout<<"Erreur dans l'ouverture du fichier " << adresse_meilleur_score << ", pensez à bien changer le chemin d'accès."<<endl;
     }
 }
 
@@ -624,29 +607,6 @@ sinon.
 {
     int ** last_T = get_last_compo();
 
-    cout << "Ancien damier" << endl;
-
-    for (int i = 0 ; i < get_L() ; i ++)
-    {
-        cout << endl;
-        for (int j = 0 ; j < get_C() ; j ++)
-        {
-            cout << last_T[i][j] << " ";
-        }
-    }
-
-    cout << endl;
-    cout << "Nouveau damier" << endl;
-
-    for (int i = 0 ; i < get_L() ; i ++)
-    {
-        cout << endl;
-        for (int j = 0 ; j < get_C() ; j ++)
-        {
-            cout << Get(i,j) << " ";
-        }
-    }
-
     for (int i = 0 ; i < get_L() ; i ++)
         for (int j = 0 ; j < get_C() ; j ++)
             if (last_T[i][j] != Get(i,j))
@@ -934,7 +894,7 @@ Lit le fichier texte contenant le meilleur score et initialise la variable meill
     }
     else
     {
-        cout<<"Error in opening file !! Function lecture_fichier"<<endl;
+        cout<<"Erreur dans l'ouverture du fichier " << adresse_meilleur_score << ", pensez à bien changer le chemin d'accès."<<endl;
         meilleur_score = 0;
     }
 }
